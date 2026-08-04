@@ -1,0 +1,28 @@
+import cv2
+
+# Open the default webcam
+cap = cv2.VideoCapture(0)
+
+# Check if webcam is opened successfully
+if not cap.isOpened():
+    print("Error: Cannot access webcam")
+    exit()
+
+while True:
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    if not ret:
+        print("Failed to capture video")
+        break
+
+    # Display the video
+    cv2.imshow("Webcam Video", frame)
+
+    # Press 'q' to quit
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Release webcam and close windows
+cap.release()
+cv2.destroyAllWindows()
