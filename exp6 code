@@ -1,0 +1,52 @@
+from google.colab import files
+import cv2
+import matplotlib.pyplot as plt
+
+# Upload Video
+uploaded = files.upload()
+
+# Get uploaded video name
+video_name = list(uploaded.keys())[0]
+
+# Read Video
+cap = cv2.VideoCapture(video_name)
+
+frame_count = 0
+
+while cap.isOpened():
+
+    ret, frame = cap.read()
+
+    if not ret:
+        break
+
+    # Convert Original Frame to RGB
+    original = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    # Convert Frame to Grayscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Display Original and Processed Frame
+    plt.figure(figsize=(10,4))
+
+    plt.subplot(1,2,1)
+    plt.imshow(original)
+    plt.title("Original Frame")
+    plt.axis("off")
+
+    plt.subplot(1,2,2)
+    plt.imshow(gray, cmap="gray")
+    plt.title("Grayscale Frame")
+    plt.axis("off")
+
+    plt.show()
+
+    frame_count += 1
+
+    # Display only first 10 frames
+    if frame_count == 10:
+        break
+
+cap.release()
+
+print("Video Processing Completed Successfully")
